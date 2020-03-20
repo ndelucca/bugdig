@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'utils',
     'cases',
+    'users',
+    'utils',
 ]
 
 MIDDLEWARE = [
@@ -80,8 +81,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bugdig',
         'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': '2181'
+        'USER': 'ndelucca',
+        'PASSWORD': '2181',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+        }
     }
 }
 
