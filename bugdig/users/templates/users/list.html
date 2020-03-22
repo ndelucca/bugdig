@@ -1,0 +1,38 @@
+<table id='users-table' class='t'>
+  <thead>
+    <tr>
+      <th>{{ headers.id }}</th>
+      <th>{{ headers.username }}</th>
+      <th>{{ headers.first_name }}</th>
+      <th>{{ headers.last_name }}</th>
+      <th>{{ headers.email }}</th>
+      <th>{{ headers.user_permissions }}</th>
+      <th>{{ headers.is_active }}</th>
+      <th>{{ headers.last_login }}</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for profile in object_list %}
+    <tr>
+      <td>{{ profile.user.id }}</td>
+      <td><a href="{% url 'users:read' profile.user.id %}">{{ profile.user.username }}</a></td>
+      <td>{{ profile.user.first_name | capfirst }}</td>
+      <td>{{ profile.user.last_name | capfirst }}</td>
+      <td>{{ profile.user.email }}</td>
+      <td>{{ profile.user.user_permissions.all | unordered_list}}</td>
+      <td>{{ profile.user.is_active }}</td>
+      <td>{{ profile.user.last_login | date:"Y-m-d"}}</td>
+    </tr>
+  {% empty %}
+    <tr>
+      <td colspan="{{ headers|length }}">{{ txt.no_users | capfirst }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>{{ txt.total }}</td>
+      <td colspan="{{ headers|length|add:"-1" }}">{{ headers|length }}</td>
+    </tr>
+  </tfoot>
+</table>

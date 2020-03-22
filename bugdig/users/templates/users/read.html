@@ -1,0 +1,26 @@
+<div class="user-show">
+  <h3>{{ object.user.username }}</h3>
+  <dl class="user-data">
+    <dt>{{ titles.id }}</dt>
+    <dd>{{ object.user.id }}</dd>
+    <dt>{{ titles.first_name }}</dt>
+    <dd>{{ object.user.first_name | capfirst }}</dd>
+    <dt>{{ titles.last_name }}</dt>
+    <dd>{{ object.user.last_name | capfirst }}</dd>
+    <dt>{{ titles.email }}</dt>
+    <dd>{{ object.user.email }}</dd>
+    <dt>{{ titles.last_login }}</dt>
+    <dd>{{ object.user.user_permissions.all | unordered_list}}</dd>
+  </dl>
+  <dl class="user-access">
+    <dt>{{ titles.user_permissions }}</dt>
+    <dd>{{ object.user.is_active }}</dd>
+    <dt>{{ titles.is_active }}</dt>
+    <dd>{{ object.user.last_login | date:"Y-m-d"}}</dd>
+  </dl>
+</div>
+
+
+
+
+

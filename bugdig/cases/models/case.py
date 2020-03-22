@@ -1,15 +1,20 @@
 from django.db import models
 from django.utils.translation import gettext as _
 
-from users.models import Person
-
-class CaseManager( models.Manager ):
-
-    pass
+from users.models import Profile
+from django.urls import reverse_lazy
 
 class Case( models.Model ):
+    """
+    # Case
 
-    cases = CaseManager()
+    Core Bugdig model
+
+    A Case can be assigned to any number of Profile
+
+    A Profile can be assigned to any number of Case
+    """
+    objects = models.Manager()
 
     title = models.CharField( unique = True,max_length = 60 )
 
@@ -19,7 +24,7 @@ class Case( models.Model ):
 
     date_updated= models.DateTimeField( auto_now = True )
 
-    assignee = models.ManyToManyField( Person, blank = True )
+    assignee = models.ManyToManyField( Profile, blank = True )
 
     class Types (models.TextChoices):
         TASK = _('task')
@@ -54,11 +59,16 @@ class Case( models.Model ):
 
     priority= models.SmallIntegerField( default = Priorities.MEDIUM, choices = Priorities.choices )
 
+    def get_absolute_url(self):
+        return reverse_lazy('cases:read', args=[self.id])
+
     def __str__( self ):
 
-        return (
-            f"id:{self.id} "
-            f"type_of:{self.type_of} "
-            f"title:{self.title} "
-            f"assignee:{self.assignee} "
-        )
+        assignees = tuple(self.assignee.all())
+
+        return f"{self.id} - {self.type_of} - {self.title} - {str(assignees)}"
+
+    def __repr__(self):
+        assignees = tuple(self.assignee.all())
+
+        return f"{self.id} - {self.type_of} - {self.title} - {str(assignees)}"

@@ -1,0 +1,40 @@
+<table id='cases-table' class='t'>
+  <thead>
+    <tr>
+      <th>{{ headers.id }}</th>
+      <th>{{ headers.type_of }}</th>
+      <th>{{ headers.title }}</th>
+      <th>{{ headers.state }}</th>
+      <th>{{ headers.priority }}</th>
+      <th>{{ headers.difficulty }}</th>
+      <th>{{ headers.assignee }}</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for case in object_list %}
+    <tr>
+      <td>{{ case.id }}</td>
+      <td>{{ case.type_of | capfirst }}</td>
+      <td><a href="{% url 'cases:read' case.id %}">{{ case.title | capfirst }}</a></td>
+      <td>{{ case.state }}</td>
+      <td>{{ case.priority }}</td>
+      <td>{{ case.difficulty }}</td>
+      <td><ul>
+      {% for assignee in case.assignee.all %}
+        <li><a href="{% url 'users:read' assignee.user.id %}">{{ assignee.user.username }}</a></li>
+      {% endfor %}
+      </ul></td>
+    </tr>
+  {% empty %}
+    <tr>
+      <td colspan="{{ headers|length }}">{{ txt.no_cases | capfirst }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>{{ txt.total }}</td>
+      <td colspan="{{ headers|length|add:"-1" }}">{{ headers|length }}</td>
+    </tr>
+  </tfoot>
+</table>

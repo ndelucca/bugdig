@@ -1,0 +1,31 @@
+<div class="case-show">
+  <h3>{{ object.title }}</h3>
+  <dl class="case-data">
+    <dt>{{ titles.id }}</dt>
+    <dd>{{ object.id }}</dd>
+    <dt>{{ titles.description }}</dt>
+    <dd>{{ object.description }}</dd>
+    <dt>{{ titles.date_created }}</dt>
+    <dd>{{ object.date_created | date:'Y-m-d' }}</dd>
+    <dt>{{ titles.date_updated }}</dt>
+    <dd>{{ object.date_updated | date:'Y-m-d'}}</dd>
+    <dt>{{ titles.type_of }}</dt>
+    <dd>{{ object.type_of | capfirst }}</dd>
+    <dt>{{ titles.state }}</dt>
+    <dd>{{ object.state | capfirst }}</dd>
+    <dt>{{ titles.priority }}</dt>
+    <dd>{{ object.priority | capfirst }}</dd>
+    <dt>{{ titles.difficulty }}</dt>
+    <dd>{{ object.difficulty }}</dd>
+    <dt>{{ titles.difficulty }}</dt>
+    <dd>
+        <ul>
+        {% for assignee in object.assignee.all %}
+            <li><a href="{% url 'users:read' assignee.user.id %}">{{assignee.user.username}}</a></li>
+        {% empty %}
+            <li>{{txt.no_assignees}}</li>
+        {% endfor %}
+        </ul>
+    </dd>
+  </dl>
+</div>
