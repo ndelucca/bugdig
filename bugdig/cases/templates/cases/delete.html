@@ -1,5 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
 <form action="." method="POST">
     {% csrf_token %}
-    {{ object }}
-    <button type="submit">Delete</button>
+    <p>
+        {% trans "You are about to delete case "%}<strong>{{object.title}}</strong>
+        <br>
+        {% trans "Are you sure?" %}
+    </p>
+    <button class="btn red darken-3" type="submit">{% trans "Yes, Delete" %}</button>
 </form>
+{% endblock content %}

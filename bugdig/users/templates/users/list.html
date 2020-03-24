@@ -1,5 +1,14 @@
-<table id='users-table' class='t'>
+{% extends 'base.html' %}
+
+{% block navbar %}
+  <li><a href="{% url 'users:create' %}"><i class="material-icons">add</i></a></li>
+  {{ block.super }}
+{% endblock navbar %}
+
+{% block content %}
+<table id='users-table' class='highlight responsive-table'>
   <thead>
+    <tr class='blue-grey lighten-4'><th class="center-align" colspan="{{ headers|length }}">{{txt.title | capfirst }}</th></tr>
     <tr>
       <th>{{ headers.id }}</th>
       <th>{{ headers.username }}</th>
@@ -9,12 +18,13 @@
       <th>{{ headers.user_permissions }}</th>
       <th>{{ headers.is_active }}</th>
       <th>{{ headers.last_login }}</th>
+      <th>{{ headers.actions }}</th>
     </tr>
   </thead>
   <tbody>
   {% for profile in object_list %}
     <tr>
-      <td>{{ profile.user.id }}</td>
+      <td>{{ profile.id }}</td>
       <td><a href="{% url 'users:read' profile.user.id %}">{{ profile.user.username }}</a></td>
       <td>{{ profile.user.first_name | capfirst }}</td>
       <td>{{ profile.user.last_name | capfirst }}</td>
@@ -22,6 +32,10 @@
       <td>{{ profile.user.user_permissions.all | unordered_list}}</td>
       <td>{{ profile.user.is_active }}</td>
       <td>{{ profile.user.last_login | date:"Y-m-d"}}</td>
+      <td>
+        <a class="waves-effect btn blue-grey lighten-2" href="{% url 'users:update' profile.id %}"><i class="material-icons">edit</i></a>
+        <a class="waves-effect btn blue-grey lighten-0" href="{% url 'users:delete' profile.id %}"><i class="material-icons">delete</i></a>
+      </td>
     </tr>
   {% empty %}
     <tr>
@@ -36,3 +50,4 @@
     </tr>
   </tfoot>
 </table>
+{% endblock content %}

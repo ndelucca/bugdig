@@ -1,26 +1,40 @@
-<div class="user-show">
-  <h3>{{ object.user.username }}</h3>
-  <dl class="user-data">
-    <dt>{{ titles.id }}</dt>
-    <dd>{{ object.user.id }}</dd>
-    <dt>{{ titles.first_name }}</dt>
-    <dd>{{ object.user.first_name | capfirst }}</dd>
-    <dt>{{ titles.last_name }}</dt>
-    <dd>{{ object.user.last_name | capfirst }}</dd>
-    <dt>{{ titles.email }}</dt>
-    <dd>{{ object.user.email }}</dd>
-    <dt>{{ titles.last_login }}</dt>
-    <dd>{{ object.user.user_permissions.all | unordered_list}}</dd>
-  </dl>
-  <dl class="user-access">
-    <dt>{{ titles.user_permissions }}</dt>
-    <dd>{{ object.user.is_active }}</dd>
-    <dt>{{ titles.is_active }}</dt>
-    <dd>{{ object.user.last_login | date:"Y-m-d"}}</dd>
-  </dl>
-</div>
+{% extends 'base.html' %}
 
+{% block content %}
+<table class="highlight">
+  <thead>
+    <tr class='blue-grey lighten-4'><th colspan="2">{{titles.table | capfirst }}</th></tr>
+    <tr>
+      <th>{{ titles.id }}</th>
+      <th>{{ object.user.id }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ titles.first_name }}</td>
+      <td>{{ object.user.first_name | capfirst }}</td>
+    </tr>
+    <tr>
+      <td>{{ titles.last_name }}</td>
+      <td>{{ object.user.last_name | capfirst }}</td>
+    </tr>
+    <tr>
+      <td>{{ titles.email }}</td>
+      <td>{{ object.user.email }}</td>
+    </tr>
+    <tr>
+      <td>{{ titles.last_login }}</td>
+      <td>{{ object.user.user_permissions.all | unordered_list}}</td>
+    </tr>
+    <tr>
+      <td>{{ titles.user_permissions }}</td>
+      <td>{{ object.user.is_active }}</td>
+    </tr>
+    <tr>
+      <td>{{ titles.is_active }}</td>
+      <td>{{ object.user.last_login | date:"Y-m-d"}}</td>
+    </tr>
+  </tbody>
+</table>
 
-
-
-
+{% endblock content %}

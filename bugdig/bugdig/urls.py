@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls import url
 
 urlpatterns = [
 
@@ -23,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('cases/', include('cases.urls')),
     path('users/', include('users.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
 ]
 
 if settings.DEBUG:

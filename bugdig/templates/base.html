@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load i18n %}
+    {% load static %}
+    <script src="https://cdn.tiny.cloud/1/5azzg05ov08od95b43lrx6mpwo2xd407kr4l2rtdqnee6tsk/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <!--Materialize-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
+    <!--Materialize-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}BugDig{% endblock title %}</title>
+</head>
+<body>
+    <nav class="blue-grey lighten-1">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#!" class="brand-logo">BugDig</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                {% block navbar %}
+                <li><a href="{% url 'cases:list' %}">{% trans 'Cases' %}</a></li>
+                <li><a href="{% url 'users:list' %}">{% trans 'Users' %}</a></li>
+                {% endblock navbar %}
+            </ul>
+        </div>
+        <ul class="sidenav" id="mobile-demo">
+            <li><a href="{% url 'cases:list' %}">{% trans 'Cases' %}</a></li>
+            <li><a href="{% url 'users:list' %}">{% trans 'Users' %}</a></li>
+        </ul>
+    </nav>
+
+    <section id="container" class="container">
+        <div class="row"></div>
+        {% block content %}
+        {% endblock content %}
+
+    </section>
+    <script type="text/javascript" src="{% static 'js/onLoad.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+</body>
+</html>

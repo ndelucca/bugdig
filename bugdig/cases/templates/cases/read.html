@@ -1,31 +1,52 @@
-<div class="case-show">
-  <h3>{{ object.title }}</h3>
-  <dl class="case-data">
-    <dt>{{ titles.id }}</dt>
-    <dd>{{ object.id }}</dd>
-    <dt>{{ titles.description }}</dt>
-    <dd>{{ object.description }}</dd>
-    <dt>{{ titles.date_created }}</dt>
-    <dd>{{ object.date_created | date:'Y-m-d' }}</dd>
-    <dt>{{ titles.date_updated }}</dt>
-    <dd>{{ object.date_updated | date:'Y-m-d'}}</dd>
-    <dt>{{ titles.type_of }}</dt>
-    <dd>{{ object.type_of | capfirst }}</dd>
-    <dt>{{ titles.state }}</dt>
-    <dd>{{ object.state | capfirst }}</dd>
-    <dt>{{ titles.priority }}</dt>
-    <dd>{{ object.priority | capfirst }}</dd>
-    <dt>{{ titles.difficulty }}</dt>
-    <dd>{{ object.difficulty }}</dd>
-    <dt>{{ titles.difficulty }}</dt>
-    <dd>
-        <ul>
-        {% for assignee in object.assignee.all %}
-            <li><a href="{% url 'users:read' assignee.user.id %}">{{assignee.user.username}}</a></li>
-        {% empty %}
-            <li>{{txt.no_assignees}}</li>
-        {% endfor %}
-        </ul>
-    </dd>
-  </dl>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+  <h5>{{ object.title }}</h5>
 </div>
+<div class="row">
+  <span class="left">{{ titles.id | capfirst }}</span>
+  <span class="right">{{ object.id }}</span>
+</div>
+<div class="row">
+  <div>{{ titles.description | capfirst }}</div>
+  <div class="card">
+    <div class="card-content">{{ object.description }}</div>
+  </div>
+</div>
+<div class="row">
+  <span class="left">{{ titles.date_created | capfirst }}</span>
+  <span class="right">{{ object.date_created | date:'Y-m-d' }}</span>
+</div>
+<div class="row">
+  <span class="left">{{ titles.date_updated | capfirst }}</span>
+  <span class="right">{{ object.date_updated | date:'Y-m-d'}}</span>
+</div>
+<div class="row">
+  <span class="left">{{ titles.type_of | capfirst }}</span>
+  <span class="right" class="right">{{ object.type_of | capfirst }}</span>
+</div>
+<div class="row">
+  <span class="left">{{ titles.state | capfirst }}</span>
+  <span class="right">{{ object.state | capfirst }}</span>
+</div>
+<div class="row">
+  <span class="left">{{ titles.priority | capfirst }}</span>
+  <span class="right">{{ choices.priority | capfirst }}</span>
+</div>
+<div class="row">
+  <span class="left">{{ titles.difficulty | capfirst }}</span>
+  <span class="right">{{ choices.difficulty }}</span>
+</div>
+<div class="row">
+  <div>{{ titles.assignee | capfirst }}</div>
+  <div class="divider"></div>
+  <div class="collection">
+    {% for assignee in object.assignee.all %}
+        <a class="collection-item" href="{% url 'users:read' assignee.user.id %}">{{assignee.user.username}}</a>
+    {% empty %}
+        <span class="collection-item">{{txt.no_assignees}}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

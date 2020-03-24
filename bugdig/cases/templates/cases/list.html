@@ -1,5 +1,14 @@
-<table id='cases-table' class='t'>
+{% extends 'base.html' %}
+
+{% block navbar %}
+  <li><a href="{% url 'cases:create' %}"><i class="material-icons">add</i></a></li>
+  {{ block.super }}
+{% endblock navbar %}
+
+{% block content %}
+<table id='cases-table' class='highlight responsive-table'>
   <thead>
+    <tr class='blue-grey lighten-4'><th class="center-align" colspan="{{ headers|length }}">{{txt.title | capfirst }}</th></tr>
     <tr>
       <th>{{ headers.id }}</th>
       <th>{{ headers.type_of }}</th>
@@ -8,6 +17,7 @@
       <th>{{ headers.priority }}</th>
       <th>{{ headers.difficulty }}</th>
       <th>{{ headers.assignee }}</th>
+      <th>{{ headers.actions }}</th>
     </tr>
   </thead>
   <tbody>
@@ -19,11 +29,15 @@
       <td>{{ case.state }}</td>
       <td>{{ case.priority }}</td>
       <td>{{ case.difficulty }}</td>
-      <td><ul>
+      <td>
       {% for assignee in case.assignee.all %}
-        <li><a href="{% url 'users:read' assignee.user.id %}">{{ assignee.user.username }}</a></li>
+        <a href="{% url 'users:read' assignee.user.id %}">{{ assignee.user.username }}</a>
       {% endfor %}
-      </ul></td>
+      </td>
+      <td>
+        <a class="waves-effect btn blue-grey lighten-2" href="{% url 'cases:update' case.id %}"><i class="material-icons">edit</i></a>
+        <a class="waves-effect btn blue-grey lighten-0" href="{% url 'cases:delete' case.id %}"><i class="material-icons">delete</i></a>
+      </td>
     </tr>
   {% empty %}
     <tr>
@@ -33,8 +47,8 @@
   </tbody>
   <tfoot>
     <tr>
-      <td>{{ txt.total }}</td>
-      <td colspan="{{ headers|length|add:"-1" }}">{{ headers|length }}</td>
+      <td colspan="{{ headers|length }}">{{ txt.total | capfirst }} {{ headers|length }}</td>
     </tr>
   </tfoot>
 </table>
+{% endblock %}

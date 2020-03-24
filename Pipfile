@@ -10,6 +10,7 @@ pytest = "*"
 pip = "==20.0.2"
 django = "==3.0.4"
 django-debug-toolbar = "==2.2"
+django-tinymce = "*"
 
 [requires]
 python_version = "3.8"

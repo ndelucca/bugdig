@@ -23,10 +23,12 @@ class ListCases( ListView ):
                 priority    = _('priority'),
                 difficulty  = _('difficulty'),
                 assignee    = _('assignee'),
+                actions     = '',
                 ),
             'txt': dict(
+                title       = _('cases'),
                 no_cases    = _('there\'s no cases available for this filter.' ),
-                total       = _('Total Cases')
+                total       = _('total cases')
             )
         })
 
@@ -34,6 +36,28 @@ class ListCases( ListView ):
 class ReadCase ( DetailView ):
     model = Case
     template_name = 'cases/read.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'titles': dict(
+            id              = _('id'),
+            title           = _('title'),
+            description     = _('description'),
+            date_created    = _('created on'),
+            date_updated    = _('last updated'),
+            type_of         = _('type'),
+            state           = _('state'),
+            priority        = _('priority'),
+            difficulty      = _('difficulty'),
+            assignee        = _('users assigned to this case'),
+            ),
+            'choices': dict(
+                priority    = Case.Priorities.choices[self.object.priority][1],
+                difficulty  = Case.Difficulties.choices[self.object.difficulty][1],
+            )
+        })
+        return context
 
 class CreateCase( CreateView ):
     model = Case
@@ -64,5 +88,4 @@ class UpdateCase( UpdateView ):
 class DeleteCase( DeleteView ):
     model = Case
     template_name = 'cases/delete.html'
-    success_url = reverse_lazy('cases:index')
-
+    success_url = reverse_lazy('cases:list')
